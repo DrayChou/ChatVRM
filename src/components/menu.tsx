@@ -6,6 +6,7 @@ import React, { useCallback, useContext, useRef, useState } from "react";
 import { Settings } from "./settings";
 import { ViewerContext } from "@/features/vrmViewer/viewerContext";
 import { AssistantText } from "./assistantText";
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   openAiKey: string;
@@ -45,6 +46,8 @@ export const Menu = ({
   handleClickResetSystemPrompt,
   onChangeKoeiromapKey,
 }: Props) => {
+  const { t } = useTranslation();
+
   const [showSettings, setShowSettings] = useState(false);
   const [showChatLog, setShowChatLog] = useState(false);
   const { viewer } = useContext(ViewerContext);
@@ -126,21 +129,21 @@ export const Menu = ({
         <div className="grid grid-flow-col gap-[8px]">
           <IconButton
             iconName="24/Menu"
-            label="設定"
+            label={t("settings")}
             isProcessing={false}
             onClick={() => setShowSettings(true)}
           ></IconButton>
           {showChatLog ? (
             <IconButton
               iconName="24/CommentOutline"
-              label="会話ログ"
+              label={t("chat_log")}
               isProcessing={false}
               onClick={() => setShowChatLog(false)}
             />
           ) : (
             <IconButton
               iconName="24/CommentFill"
-              label="会話ログ"
+              label={t("chat_log")}
               isProcessing={false}
               disabled={chatLog.length <= 0}
               onClick={() => setShowChatLog(true)}

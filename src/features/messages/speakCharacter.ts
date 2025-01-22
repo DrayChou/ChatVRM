@@ -3,8 +3,9 @@ import { synthesizeVoiceApi } from "./synthesizeVoice";
 import { Viewer } from "../vrmViewer/viewer";
 import { Screenplay } from "./messages";
 import { Talk } from "./messages";
+import i18n from "@/locales/i18n";
 
-const createSpeakCharacter = () => {
+const createSpeakCharacter = (i18nInstance: typeof i18n) => {
   let lastTime = 0;
   let prevFetchPromise: Promise<unknown> = Promise.resolve();
   let prevSpeakPromise: Promise<unknown> = Promise.resolve();
@@ -20,6 +21,11 @@ const createSpeakCharacter = () => {
       const now = Date.now();
       if (now - lastTime < 1000) {
         await wait(1000 - (now - lastTime));
+      }
+
+      // 如果当前语言不是日文，则不发送 TTS 请求，直接返回 null
+      if (i18nInstance.language !== "ja-JP") {
+        return null;
       }
 
       const buffer = await fetchAudio(screenplay.talk, koeiroApiKey).catch(
@@ -45,7 +51,7 @@ const createSpeakCharacter = () => {
   };
 };
 
-export const speakCharacter = createSpeakCharacter();
+export const speakCharacter = createSpeakCharacter(i18n);
 
 export const fetchAudio = async (
   talk: Talk,

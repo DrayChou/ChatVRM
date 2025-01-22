@@ -19,7 +19,7 @@ export async function synthesizeVoiceApi(
   style: TalkStyle,
   apiKey: string
 ) {
-  // Free向けに感情を制限する
+  // Free 向けに感情を制限する
   const reducedStyle = reduceTalkStyle(style);
 
   const body = {

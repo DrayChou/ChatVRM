@@ -1,5 +1,6 @@
 import { MessageInput } from "@/components/messageInput";
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   isChatProcessing: boolean;
@@ -16,6 +17,7 @@ export const MessageInputContainer = ({
   isChatProcessing,
   onChatProcessStart,
 }: Props) => {
+  const { i18n } = useTranslation();
   const [userMessage, setUserMessage] = useState("");
   const [speechRecognition, setSpeechRecognition] =
     useState<SpeechRecognition>();
@@ -62,12 +64,12 @@ export const MessageInputContainer = ({
     const SpeechRecognition =
       window.webkitSpeechRecognition || window.SpeechRecognition;
 
-    // FirefoxなどSpeechRecognition非対応環境対策
+    // Firefox など SpeechRecognition 非対応環境対策
     if (!SpeechRecognition) {
       return;
     }
     const recognition = new SpeechRecognition();
-    recognition.lang = "ja-JP";
+    recognition.lang = i18n.language;
     recognition.interimResults = true; // 認識の途中結果を返す
     recognition.continuous = false; // 発言の終了時に認識を終了する
 

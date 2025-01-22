@@ -8,18 +8,21 @@ import {
 } from "@/features/messages/messages";
 import { speakCharacter } from "@/features/messages/speakCharacter";
 import { MessageInputContainer } from "@/components/messageInputContainer";
-import { SYSTEM_PROMPT } from "@/features/constants/systemPromptConstants";
+import { getSystemPrompt } from "@/features/constants/systemPromptConstants";
 import { KoeiroParam, DEFAULT_PARAM } from "@/features/constants/koeiroParam";
 import { getChatResponseStream } from "@/features/chat/openAiChat";
 import { Introduction } from "@/components/introduction";
 import { Menu } from "@/components/menu";
 import { GitHubLink } from "@/components/githubLink";
 import { Meta } from "@/components/meta";
+import { useTranslation } from "react-i18next";
+import { LanguageSwitcher } from "@/components/languageSwitcher";
 
 export default function Home() {
+  const { t, i18n } = useTranslation();
   const { viewer } = useContext(ViewerContext);
 
-  const [systemPrompt, setSystemPrompt] = useState(SYSTEM_PROMPT);
+  const [systemPrompt, setSystemPrompt] = useState(getSystemPrompt(i18n.language));
   const [openAiKey, setOpenAiKey] = useState("");
   const [openAiBaseUrl, setOpenAiBaseUrl] = useState("");
   const [defaultModel, setDefaultModel] = useState("");
@@ -34,7 +37,7 @@ export default function Home() {
       const params = JSON.parse(
         window.localStorage.getItem("chatVRMParams") as string
       );
-      setSystemPrompt(params.systemPrompt ?? SYSTEM_PROMPT);
+      setSystemPrompt(params.systemPrompt ?? getSystemPrompt(i18n.language));
       setKoeiroParam(params.koeiroParam ?? DEFAULT_PARAM);
       setChatLog(params.chatLog ?? []);
 
@@ -237,10 +240,11 @@ export default function Home() {
         onChangeChatLog={handleChangeChatLog}
         onChangeKoeiromapParam={setKoeiroParam}
         handleClickResetChatLog={() => setChatLog([])}
-        handleClickResetSystemPrompt={() => setSystemPrompt(SYSTEM_PROMPT)}
+        handleClickResetSystemPrompt={() => setSystemPrompt(getSystemPrompt(i18n.language))}
         onChangeKoeiromapKey={setKoeiromapKey}
       />
       <GitHubLink />
+      <LanguageSwitcher />
     </div>
   );
 }

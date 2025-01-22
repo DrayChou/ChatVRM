@@ -21,6 +21,8 @@ export default function Home() {
 
   const [systemPrompt, setSystemPrompt] = useState(SYSTEM_PROMPT);
   const [openAiKey, setOpenAiKey] = useState("");
+  const [openAiBaseUrl, setOpenAiBaseUrl] = useState("");
+  const [defaultModel, setDefaultModel] = useState("");
   const [koeiromapKey, setKoeiromapKey] = useState("");
   const [koeiroParam, setKoeiroParam] = useState<KoeiroParam>(DEFAULT_PARAM);
   const [chatProcessing, setChatProcessing] = useState(false);
@@ -103,7 +105,12 @@ export default function Home() {
         ...messageLog,
       ];
 
-      const stream = await getChatResponseStream(messages, openAiKey).catch(
+      const stream = await getChatResponseStream(
+        messages, 
+        openAiKey,
+        openAiBaseUrl,
+        defaultModel
+      ).catch(
         (e) => {
           console.error(e);
           return null;
@@ -181,7 +188,7 @@ export default function Home() {
       setChatLog(messageLogAssistant);
       setChatProcessing(false);
     },
-    [systemPrompt, chatLog, handleSpeakAi, openAiKey, koeiroParam]
+    [systemPrompt, chatLog, handleSpeakAi, openAiKey, koeiroParam, openAiBaseUrl]
   );
 
   return (
@@ -189,8 +196,12 @@ export default function Home() {
       <Meta />
       <Introduction
         openAiKey={openAiKey}
+        openAiBaseUrl={openAiBaseUrl}
+        defaultModel={defaultModel}
         koeiroMapKey={koeiromapKey}
         onChangeAiKey={setOpenAiKey}
+        onChangeAiBaseUrl={setOpenAiBaseUrl}
+        onChangeDefaultModel={setDefaultModel}
         onChangeKoeiromapKey={setKoeiromapKey}
       />
       <VrmViewer />
@@ -200,12 +211,16 @@ export default function Home() {
       />
       <Menu
         openAiKey={openAiKey}
+        openAiBaseUrl={openAiBaseUrl}
+        defaultModel={defaultModel}
         systemPrompt={systemPrompt}
         chatLog={chatLog}
         koeiroParam={koeiroParam}
         assistantMessage={assistantMessage}
         koeiromapKey={koeiromapKey}
         onChangeAiKey={setOpenAiKey}
+        onChangeAiBaseUrl={setOpenAiBaseUrl}
+        onChangeDefaultModel={setDefaultModel}
         onChangeSystemPrompt={setSystemPrompt}
         onChangeChatLog={handleChangeChatLog}
         onChangeKoeiromapParam={setKoeiroParam}

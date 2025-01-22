@@ -3,14 +3,22 @@ import { Link } from "./link";
 
 type Props = {
   openAiKey: string;
+  openAiBaseUrl: string;
+  defaultModel: string;
   koeiroMapKey: string;
   onChangeAiKey: (openAiKey: string) => void;
+  onChangeAiBaseUrl: (openAiBaseUrl: string) => void;
+  onChangeDefaultModel: (defaultModel: string) => void;
   onChangeKoeiromapKey: (koeiromapKey: string) => void;
 };
 export const Introduction = ({
   openAiKey,
+  openAiBaseUrl,
+  defaultModel,
   koeiroMapKey,
   onChangeAiKey,
+  onChangeAiBaseUrl,
+  onChangeDefaultModel,
   onChangeKoeiromapKey,
 }: Props) => {
   const [opened, setOpened] = useState(true);
@@ -20,6 +28,20 @@ export const Introduction = ({
       onChangeAiKey(event.target.value);
     },
     [onChangeAiKey]
+  );
+
+  const handleAiBaseUrlChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChangeAiBaseUrl(event.target.value);
+    },
+    [onChangeAiBaseUrl]
+  );
+
+  const handleDefaultModelChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChangeDefaultModel(event.target.value);
+    },
+    [onChangeDefaultModel]
   );
 
   const handleKoeiromapKeyChange = useCallback(
@@ -121,6 +143,21 @@ export const Introduction = ({
             placeholder="sk-..."
             value={openAiKey}
             onChange={handleAiKeyChange}
+            className="my-4 px-16 py-8 w-full h-40 bg-surface3 hover:bg-surface3-hover rounded-4 text-ellipsis"
+          ></input>
+          {/* 再加上 openai base url */}
+          <input  
+            type="text"
+            placeholder="https://api.openai.com/v1"
+            value={openAiBaseUrl}
+            onChange={handleAiBaseUrlChange}
+            className="my-4 px-16 py-8 w-full h-40 bg-surface3 hover:bg-surface3-hover rounded-4 text-ellipsis"
+          ></input>
+          <input
+            type="text"
+            placeholder="gpt-3.5-turbo"
+            value={defaultModel}
+            onChange={handleDefaultModelChange}
             className="my-4 px-16 py-8 w-full h-40 bg-surface3 hover:bg-surface3-hover rounded-4 text-ellipsis"
           ></input>
           <div>

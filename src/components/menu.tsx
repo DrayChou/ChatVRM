@@ -9,6 +9,8 @@ import { AssistantText } from "./assistantText";
 
 type Props = {
   openAiKey: string;
+  openAiBaseUrl: string;
+  defaultModel: string;
   systemPrompt: string;
   chatLog: Message[];
   koeiroParam: KoeiroParam;
@@ -16,6 +18,8 @@ type Props = {
   koeiromapKey: string;
   onChangeSystemPrompt: (systemPrompt: string) => void;
   onChangeAiKey: (key: string) => void;
+  onChangeAiBaseUrl: (baseUrl: string) => void;
+  onChangeDefaultModel: (model: string) => void;
   onChangeChatLog: (index: number, text: string) => void;
   onChangeKoeiromapParam: (param: KoeiroParam) => void;
   handleClickResetChatLog: () => void;
@@ -24,6 +28,8 @@ type Props = {
 };
 export const Menu = ({
   openAiKey,
+  openAiBaseUrl,
+  defaultModel,
   systemPrompt,
   chatLog,
   koeiroParam,
@@ -31,6 +37,8 @@ export const Menu = ({
   koeiromapKey,
   onChangeSystemPrompt,
   onChangeAiKey,
+  onChangeAiBaseUrl,
+  onChangeDefaultModel,
   onChangeChatLog,
   onChangeKoeiromapParam,
   handleClickResetChatLog,
@@ -54,6 +62,20 @@ export const Menu = ({
       onChangeAiKey(event.target.value);
     },
     [onChangeAiKey]
+  );
+
+  const handleAiBaseUrlChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChangeAiBaseUrl(event.target.value);
+    },
+    [onChangeAiBaseUrl]
+  );
+
+  const handleDefaultModelChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChangeDefaultModel(event.target.value);
+    },
+    [onChangeDefaultModel]
   );
 
   const handleChangeKoeiromapKey = useCallback(
@@ -130,12 +152,16 @@ export const Menu = ({
       {showSettings && (
         <Settings
           openAiKey={openAiKey}
+          openAiBaseUrl={openAiBaseUrl}
+          defaultModel={defaultModel}
           chatLog={chatLog}
           systemPrompt={systemPrompt}
           koeiroParam={koeiroParam}
           koeiromapKey={koeiromapKey}
           onClickClose={() => setShowSettings(false)}
           onChangeAiKey={handleAiKeyChange}
+          onChangeAiBaseUrl={handleAiBaseUrlChange}
+          onChangeDefaultModel={handleDefaultModelChange}
           onChangeSystemPrompt={handleChangeSystemPrompt}
           onChangeChatLog={onChangeChatLog}
           onChangeKoeiroParam={handleChangeKoeiroParam}

@@ -13,12 +13,16 @@ import { Link } from "./link";
 
 type Props = {
   openAiKey: string;
+  openAiBaseUrl: string;
+  defaultModel: string;
   systemPrompt: string;
   chatLog: Message[];
   koeiroParam: KoeiroParam;
   koeiromapKey: string;
   onClickClose: () => void;
   onChangeAiKey: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeAiBaseUrl: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeDefaultModel: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeSystemPrompt: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onChangeChatLog: (index: number, text: string) => void;
   onChangeKoeiroParam: (x: number, y: number) => void;
@@ -29,6 +33,8 @@ type Props = {
 };
 export const Settings = ({
   openAiKey,
+  openAiBaseUrl,
+  defaultModel,
   chatLog,
   systemPrompt,
   koeiroParam,
@@ -36,6 +42,8 @@ export const Settings = ({
   onClickClose,
   onChangeSystemPrompt,
   onChangeAiKey,
+  onChangeAiBaseUrl,
+  onChangeDefaultModel,
   onChangeChatLog,
   onChangeKoeiroParam,
   onClickOpenVrmFile,
@@ -63,6 +71,20 @@ export const Settings = ({
               placeholder="sk-..."
               value={openAiKey}
               onChange={onChangeAiKey}
+            />
+            <input
+              className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"
+              type="text"
+              placeholder="https://api.openai.com/v1"
+              value={openAiBaseUrl}
+              onChange={onChangeAiBaseUrl}
+            />
+            <input
+              className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"
+              type="text"
+              placeholder="gpt-3.5-turbo"
+              value={defaultModel}
+              onChange={onChangeDefaultModel}
             />
             <div>
               APIキーは

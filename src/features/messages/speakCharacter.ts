@@ -3,9 +3,8 @@ import { synthesizeVoiceApi } from "./synthesizeVoice";
 import { Viewer } from "../vrmViewer/viewer";
 import { Screenplay } from "./messages";
 import { Talk } from "./messages";
-import i18n from "@/locales/i18n";
 
-const createSpeakCharacter = (i18nInstance: typeof i18n) => {
+const createSpeakCharacter = () => {
   let lastTime = 0;
   let prevFetchPromise: Promise<unknown> = Promise.resolve();
   let prevSpeakPromise: Promise<unknown> = Promise.resolve();
@@ -14,6 +13,9 @@ const createSpeakCharacter = (i18nInstance: typeof i18n) => {
     screenplay: Screenplay,
     viewer: Viewer,
     koeiroApiKey: string,
+    openAiBaseUrl: string,
+    openAiKey: string,
+    language: string = "ja-JP",
     onStart?: () => void,
     onComplete?: () => void
   ) => {
@@ -23,12 +25,13 @@ const createSpeakCharacter = (i18nInstance: typeof i18n) => {
         await wait(1000 - (now - lastTime));
       }
 
-      // 如果当前语言不是日文，则不发送 TTS 请求，直接返回 null
-      if (i18nInstance.language !== "ja-JP") {
-        return null;
-      }
-
-      const buffer = await fetchAudio(screenplay.talk, koeiroApiKey).catch(
+      const buffer = await fetchAudio(
+        screenplay.talk,
+        koeiroApiKey,
+        openAiBaseUrl,
+        openAiKey,
+        language
+      ).catch(
         () => null
       );
       lastTime = Date.now();
@@ -51,18 +54,43 @@ const createSpeakCharacter = (i18nInstance: typeof i18n) => {
   };
 };
 
-export const speakCharacter = createSpeakCharacter(i18n);
+export const speakCharacter = createSpeakCharacter();
 
 export const fetchAudio = async (
   talk: Talk,
-  apiKey: string
+  koeiroApiKey: string,
+  openAiBaseUrl: string,
+  openAiKey: string,
+  language: string = "ja-JP"
 ): Promise<ArrayBuffer> => {
+  if (language !== "ja-JP") {
+    const res = await fetch(
+      openAiBaseUrl + "/audio/speech",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${openAiKey}`,
+        },
+        body: JSON.stringify({
+          input: talk.message,
+          model: "FunAudioLLM/CosyVoice2-0.5B",
+          voice: "FunAudioLLM/CosyVoice2-0.5B:anna",
+          response_format: "mp3",
+        }),
+      }
+    );
+    // 返回的就是 mp3 文件
+    const buffer = await res.arrayBuffer();
+    return buffer;
+  }
+
   const ttsVoice = await synthesizeVoiceApi(
     talk.message,
     talk.speakerX,
     talk.speakerY,
     talk.style,
-    apiKey
+    koeiroApiKey,
   );
   const url = ttsVoice.audio;
 

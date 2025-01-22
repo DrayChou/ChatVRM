@@ -84,9 +84,16 @@ export default function Home() {
       onStart?: () => void,
       onEnd?: () => void
     ) => {
-      speakCharacter(screenplay, viewer, koeiromapKey, onStart, onEnd);
+      speakCharacter(
+        screenplay, viewer, 
+        koeiromapKey,
+        openAiBaseUrl,
+        openAiKey,
+        i18n.language,
+        onStart, onEnd
+      );
     },
-    [viewer, koeiromapKey]
+    [viewer, koeiromapKey, openAiKey]
   );
 
   /**

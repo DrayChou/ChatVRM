@@ -37,6 +37,12 @@ export default function Home() {
       setSystemPrompt(params.systemPrompt ?? SYSTEM_PROMPT);
       setKoeiroParam(params.koeiroParam ?? DEFAULT_PARAM);
       setChatLog(params.chatLog ?? []);
+
+      // AiKey, AiBaseUrl, DefaultModel, KoeiromapKey はローカルストレージに保存しない
+      setOpenAiKey(params.openAiKey ?? "");
+      setOpenAiBaseUrl(params.openAiBaseUrl ?? "");
+      setDefaultModel(params.defaultModel ?? "");
+      setKoeiromapKey(params.koeiromapKey ?? "");
     }
   }, []);
 
@@ -44,10 +50,16 @@ export default function Home() {
     process.nextTick(() =>
       window.localStorage.setItem(
         "chatVRMParams",
-        JSON.stringify({ systemPrompt, koeiroParam, chatLog })
+        JSON.stringify({ 
+          systemPrompt, koeiroParam, chatLog, 
+          openAiKey, openAiBaseUrl, defaultModel, koeiromapKey 
+        })
       )
     );
-  }, [systemPrompt, koeiroParam, chatLog]);
+  }, [
+    systemPrompt, koeiroParam, chatLog,
+    openAiKey, openAiBaseUrl, defaultModel, koeiromapKey
+  ]);
 
   const handleChangeChatLog = useCallback(
     (targetIndex: number, text: string) => {

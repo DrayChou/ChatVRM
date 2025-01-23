@@ -20,6 +20,7 @@ type Props = {
   chatLog: Message[];
   koeiroParam: KoeiroParam;
   koeiromapKey: string;
+  siliconCloudKey: string;
   onClickClose: () => void;
   onChangeAiKey: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeAiBaseUrl: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -31,6 +32,7 @@ type Props = {
   onClickResetChatLog: () => void;
   onClickResetSystemPrompt: () => void;
   onChangeKoeiromapKey: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeSiliconCloudKey: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 export const Settings = ({
   openAiKey,
@@ -40,6 +42,7 @@ export const Settings = ({
   systemPrompt,
   koeiroParam,
   koeiromapKey,
+  siliconCloudKey,
   onClickClose,
   onChangeSystemPrompt,
   onChangeAiKey,
@@ -51,6 +54,7 @@ export const Settings = ({
   onClickResetChatLog,
   onClickResetSystemPrompt,
   onChangeKoeiromapKey,
+  onChangeSiliconCloudKey,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -67,6 +71,7 @@ export const Settings = ({
         <div className="text-text1 max-w-3xl mx-auto px-24 py-64">
           <div className="my-24 typography-32 font-bold">{t("settings")}</div>
           <div className="my-24">
+            <div className="my-24">
             <div className="my-16 typography-20 font-bold">{t("openai_api_key")}</div>
             <input
               className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"
@@ -74,20 +79,6 @@ export const Settings = ({
               placeholder="sk-..."
               value={openAiKey}
               onChange={onChangeAiKey}
-            />
-            <input
-              className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"
-              type="text"
-              placeholder="https://api.openai.com/v1"
-              value={openAiBaseUrl}
-              onChange={onChangeAiBaseUrl}
-            />
-            <input
-              className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"
-              type="text"
-              placeholder="gpt-3.5-turbo"
-              value={defaultModel}
-              onChange={onChangeDefaultModel}
             />
             <div>
               {t("api_key_obtain")}
@@ -97,12 +88,53 @@ export const Settings = ({
               />
               {t("api_key_input")}
             </div>
+          </div>
+          <div className="my-24">
+            <div className="my-16 typography-20 font-bold">{t("openai_base_url")}</div>
+            <input
+              className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"
+              type="text"
+              placeholder="https://api.openai.com/v1"
+              value={openAiBaseUrl}
+              onChange={onChangeAiBaseUrl}
+            />
+          </div>
+          <div className="my-24">
+            <div className="my-16 typography-20 font-bold">{t("default_model")}</div>
+            <input
+              className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"
+              type="text"
+              placeholder="gpt-3.5-turbo"
+              value={defaultModel}
+              onChange={onChangeDefaultModel}
+            />
+          </div>
             <div className="my-16">
               {t("chatgpt_api_note")}
               <br />
               {t("model_used")}
             </div>
           </div>
+
+          <div className="my-24">
+            <div className="my-16 typography-20 font-bold">{t("siliconcloud_api_key")}</div>
+            <input
+              className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"
+              type="text"
+              placeholder="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+              value={siliconCloudKey}
+              onChange={onChangeSiliconCloudKey}
+            />
+            <div>
+              {t("api_key_obtain")}
+              <Link
+                url="https://cloud.siliconflow.cn/account/ak"
+                label={t("details_here")}
+              />
+              {t("api_key_input")}
+            </div>
+          </div>
+
           <div className="my-40">
             <div className="my-16 typography-20 font-bold">{t("character_model")}</div>
             <div className="my-8">
@@ -130,7 +162,7 @@ export const Settings = ({
               />
               {t("see_details")}
             </div>
-            <div className="mt-16 font-bold">{t("api_key")}</div>
+            <div className="mt-16 font-bold">{t("koeiromap_api_key")}</div>
             <div className="mt-8">
               <input
                 className="text-ellipsis px-16 py-8 w-col-span-2 bg-surface1 hover:bg-surface1-hover rounded-8"

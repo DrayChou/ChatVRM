@@ -13,8 +13,7 @@ const createSpeakCharacter = () => {
     screenplay: Screenplay,
     viewer: Viewer,
     koeiroApiKey: string,
-    openAiBaseUrl: string,
-    openAiKey: string,
+    siliconCloudKey: string,
     language: string = "ja-JP",
     onStart?: () => void,
     onComplete?: () => void
@@ -28,8 +27,7 @@ const createSpeakCharacter = () => {
       const buffer = await fetchAudio(
         screenplay.talk,
         koeiroApiKey,
-        openAiBaseUrl,
-        openAiKey,
+        siliconCloudKey,
         language
       ).catch(
         () => null
@@ -59,18 +57,17 @@ export const speakCharacter = createSpeakCharacter();
 export const fetchAudio = async (
   talk: Talk,
   koeiroApiKey: string,
-  openAiBaseUrl: string,
-  openAiKey: string,
+  siliconCloudKey: string,
   language: string = "ja-JP"
 ): Promise<ArrayBuffer> => {
-  if (language !== "ja-JP") {
+  if (language !== "ja-JP" && siliconCloudKey.length > 0) {
     const res = await fetch(
-      openAiBaseUrl + "/audio/speech",
+      "https://api.siliconflow.cn/v1/audio/speech",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${openAiKey}`,
+          Authorization: `Bearer ${siliconCloudKey}`,
         },
         body: JSON.stringify({
           input: talk.message,

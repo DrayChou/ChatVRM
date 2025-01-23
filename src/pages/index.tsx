@@ -28,6 +28,7 @@ export default function Home() {
   const [defaultModel, setDefaultModel] = useState("");
   const [koeiromapKey, setKoeiromapKey] = useState("");
   const [koeiroParam, setKoeiroParam] = useState<KoeiroParam>(DEFAULT_PARAM);
+  const [siliconCloudKey, setSiliconCloudKey] = useState("");
   const [chatProcessing, setChatProcessing] = useState(false);
   const [chatLog, setChatLog] = useState<Message[]>([]);
   const [assistantMessage, setAssistantMessage] = useState("");
@@ -46,6 +47,7 @@ export default function Home() {
       setOpenAiBaseUrl(params.openAiBaseUrl ?? "");
       setDefaultModel(params.defaultModel ?? "");
       setKoeiromapKey(params.koeiromapKey ?? "");
+      setSiliconCloudKey(params.siliconCloudKey ?? "");
     }
   }, []);
 
@@ -55,13 +57,15 @@ export default function Home() {
         "chatVRMParams",
         JSON.stringify({ 
           systemPrompt, koeiroParam, chatLog, 
-          openAiKey, openAiBaseUrl, defaultModel, koeiromapKey 
+          openAiKey, openAiBaseUrl, defaultModel, 
+          koeiromapKey, siliconCloudKey
         })
       )
     );
   }, [
     systemPrompt, koeiroParam, chatLog,
-    openAiKey, openAiBaseUrl, defaultModel, koeiromapKey
+    openAiKey, openAiBaseUrl, defaultModel, 
+    koeiromapKey, siliconCloudKey
   ]);
 
   const handleChangeChatLog = useCallback(
@@ -87,13 +91,12 @@ export default function Home() {
       speakCharacter(
         screenplay, viewer, 
         koeiromapKey,
-        openAiBaseUrl,
-        openAiKey,
+        siliconCloudKey,
         i18n.language,
         onStart, onEnd
       );
     },
-    [viewer, koeiromapKey, openAiKey]
+    [viewer, koeiromapKey, siliconCloudKey]
   );
 
   /**
@@ -221,10 +224,12 @@ export default function Home() {
         openAiBaseUrl={openAiBaseUrl}
         defaultModel={defaultModel}
         koeiroMapKey={koeiromapKey}
+        siliconCloudKey={siliconCloudKey}
         onChangeAiKey={setOpenAiKey}
         onChangeAiBaseUrl={setOpenAiBaseUrl}
         onChangeDefaultModel={setDefaultModel}
         onChangeKoeiromapKey={setKoeiromapKey}
+        onChangeSiliconCloudKey={setSiliconCloudKey}
       />
       <VrmViewer />
       <MessageInputContainer
@@ -240,6 +245,7 @@ export default function Home() {
         koeiroParam={koeiroParam}
         assistantMessage={assistantMessage}
         koeiromapKey={koeiromapKey}
+        siliconCloudKey={siliconCloudKey}
         onChangeAiKey={setOpenAiKey}
         onChangeAiBaseUrl={setOpenAiBaseUrl}
         onChangeDefaultModel={setDefaultModel}
@@ -249,6 +255,7 @@ export default function Home() {
         handleClickResetChatLog={() => setChatLog([])}
         handleClickResetSystemPrompt={() => setSystemPrompt(getSystemPrompt(i18n.language))}
         onChangeKoeiromapKey={setKoeiromapKey}
+        onChangeSiliconCloudKey={setSiliconCloudKey}
       />
       <GitHubLink />
       <LanguageSwitcher />

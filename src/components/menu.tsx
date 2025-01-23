@@ -17,6 +17,7 @@ type Props = {
   koeiroParam: KoeiroParam;
   assistantMessage: string;
   koeiromapKey: string;
+  siliconCloudKey: string;
   onChangeSystemPrompt: (systemPrompt: string) => void;
   onChangeAiKey: (key: string) => void;
   onChangeAiBaseUrl: (baseUrl: string) => void;
@@ -26,6 +27,7 @@ type Props = {
   handleClickResetChatLog: () => void;
   handleClickResetSystemPrompt: () => void;
   onChangeKoeiromapKey: (key: string) => void;
+  onChangeSiliconCloudKey: (key: string) => void;
 };
 export const Menu = ({
   openAiKey,
@@ -36,6 +38,7 @@ export const Menu = ({
   koeiroParam,
   assistantMessage,
   koeiromapKey,
+  siliconCloudKey,
   onChangeSystemPrompt,
   onChangeAiKey,
   onChangeAiBaseUrl,
@@ -45,6 +48,7 @@ export const Menu = ({
   handleClickResetChatLog,
   handleClickResetSystemPrompt,
   onChangeKoeiromapKey,
+  onChangeSiliconCloudKey,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -86,6 +90,13 @@ export const Menu = ({
       onChangeKoeiromapKey(event.target.value);
     },
     [onChangeKoeiromapKey]
+  );
+
+  const handleChangeSiliconCloudKey = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChangeSiliconCloudKey(event.target.value);
+    },
+    [onChangeSiliconCloudKey]
   );
 
   const handleChangeKoeiroParam = useCallback(
@@ -161,6 +172,7 @@ export const Menu = ({
           systemPrompt={systemPrompt}
           koeiroParam={koeiroParam}
           koeiromapKey={koeiromapKey}
+          siliconCloudKey={siliconCloudKey}
           onClickClose={() => setShowSettings(false)}
           onChangeAiKey={handleAiKeyChange}
           onChangeAiBaseUrl={handleAiBaseUrlChange}
@@ -172,6 +184,7 @@ export const Menu = ({
           onClickResetChatLog={handleClickResetChatLog}
           onClickResetSystemPrompt={handleClickResetSystemPrompt}
           onChangeKoeiromapKey={handleChangeKoeiromapKey}
+          onChangeSiliconCloudKey={handleChangeSiliconCloudKey}
         />
       )}
       {!showChatLog && assistantMessage && (

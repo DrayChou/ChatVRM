@@ -7,20 +7,24 @@ type Props = {
   openAiBaseUrl: string;
   defaultModel: string;
   koeiroMapKey: string;
+  siliconCloudKey: string;
   onChangeAiKey: (openAiKey: string) => void;
   onChangeAiBaseUrl: (openAiBaseUrl: string) => void;
   onChangeDefaultModel: (defaultModel: string) => void;
   onChangeKoeiromapKey: (koeiromapKey: string) => void;
+  onChangeSiliconCloudKey: (siliconCloudKey: string) => void;
 };
 export const Introduction = ({
   openAiKey,
   openAiBaseUrl,
   defaultModel,
   koeiroMapKey,
+  siliconCloudKey,
   onChangeAiKey,
   onChangeAiBaseUrl,
   onChangeDefaultModel,
   onChangeKoeiromapKey,
+  onChangeSiliconCloudKey,
 }: Props) => {
   const { t } = useTranslation();
   const [opened, setOpened] = useState(true);
@@ -51,6 +55,13 @@ export const Introduction = ({
       onChangeKoeiromapKey(event.target.value);
     },
     [onChangeKoeiromapKey]
+  );
+
+  const handleSiliconCloudKeyChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChangeSiliconCloudKey(event.target.value);
+    },
+    [onChangeSiliconCloudKey]
   );
 
   return opened ? (
@@ -129,13 +140,33 @@ export const Introduction = ({
             className="my-4 px-16 py-8 w-full h-40 bg-surface3 hover:bg-surface3-hover rounded-4 text-ellipsis"
           ></input>
           <div>
-            {t("api_key_issued")}
+            {t("koeiromap_api_key_issued")}
             <Link
               url="https://developers.rinna.co.jp/product/#product=koeiromap-free"
               label={t("details_here")}
             />
           </div>
         </div>
+        <div className="my-24">
+          <div className="my-8 font-bold typography-20 text-secondary">
+            {t("siliconcloud_api_key")}
+          </div>
+          <input
+            type="text"
+            placeholder="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+            value={siliconCloudKey}
+            onChange={handleSiliconCloudKeyChange}
+            className="my-4 px-16 py-8 w-full h-40 bg-surface3 hover:bg-surface3-hover rounded-4 text-ellipsis"
+          ></input>
+          <div>
+            {t("siliconcloud_api_key_issued")}
+            <Link
+              url="https://docs.siliconflow.cn/quickstart"
+              label={t("details_here")}
+            />
+          </div>
+        </div>
+
         <div className="my-24">
           <div className="my-8 font-bold typography-20 text-secondary">
             {t("openai_api_key")}

@@ -1,6 +1,6 @@
 # ChatVRM
 
-[English](./README_EN.md) | 简体中文(./README_CN.md) | [日本語](./README_JP.md)
+[English](./README_EN.md) | [简体中文](./README_CN.md) | [日本語](./README_JP.md)
 
 ChatVRM is a project primarily aimed at technical sharing and demonstration.
 

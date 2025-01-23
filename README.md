@@ -19,7 +19,7 @@ ChatVRM 的主要功能使用以下技术：
   - [ChatGPT API](https://platform.openai.com/docs/api-reference/chat)
 - 语音合成
   - [Koemotion/Koeiromap API](https://koemotion.rinna.co.jp/)
-  - [SiliconCloud TTS API](https://siliconcloud.com/api)
+  - [SiliconCloud TTS API](https://docs.siliconflow.cn/quickstart)
 - 3D 角色显示
   - [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)
 
@@ -82,4 +82,4 @@ ChatVRM 使用 SiliconCloud 的 TTS API 进行中文响应文本的语音合成�
 
 有关 SiliconCloud TTS API 规范和使用条款的详细信息，请参阅以下链接或官方网站。
 
-- [https://siliconcloud.com/api](https://siliconcloud.com/api)
+- [https://docs.siliconflow.cn/quickstart](https://docs.siliconflow.cn/quickstart)

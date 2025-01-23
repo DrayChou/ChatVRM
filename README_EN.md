@@ -19,7 +19,7 @@ The main technologies used in ChatVRM are as follows:
   - [ChatGPT API](https://platform.openai.com/docs/api-reference/chat)
 - Speech synthesis
   - [Koemotion/Koeiromap API](https://koemotion.rinna.co.jp/)
-  - [SiliconCloud TTS API](https://siliconcloud.com/api)
+  - [SiliconCloud TTS API](https://docs.siliconflow.cn/quickstart)
 - 3D character display
   - [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)
 

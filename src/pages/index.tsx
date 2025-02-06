@@ -156,6 +156,17 @@ export default function Home() {
           const { done, value } = await reader.read();
           if (done) break;
 
+          if (value == null || value.length === 0) {
+            continue;
+          }
+
+          // 如果去掉空格换行 tab 等字符后为空，则跳过
+          if (!value.replace(/\s/g, "")) {
+            continue;
+          }
+
+          // console.log("handleSendChat, value:", value);
+
           receivedMessage += value;
 
           // 返答内容のタグ部分の検出

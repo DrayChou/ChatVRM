@@ -95,7 +95,8 @@ export async function getChatResponseStream(
             .filter((val) => !!val && val.trim() !== "[DONE]");
           for (const chunk of chunks) {
             const json = JSON.parse(chunk);
-            const messagePiece = json.choices[0].delta.content;
+            const delta = json.choices[0].delta;
+            const messagePiece = delta.content;
             if (!!messagePiece) {
               controller.enqueue(messagePiece);
             }
